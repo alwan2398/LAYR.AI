@@ -14,9 +14,9 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Layr",
+  title: "LAYR AI - AI-powered website generator",
   description:
-    "Layr is an AI-powered interface design tool that transforms ideas into structured UI layouts. Describe what you want, and Layr generates clean, production-ready design sections—fast, consistent, and scalable.",
+    "LAYR AI is an AI-powered website generator that transforms ideas into structured UI layouts. Describe what you want, and Layr generates clean, production-ready design sections—fast, consistent, and scalable.",
 };
 
 export default function RootLayout({

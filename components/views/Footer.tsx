@@ -1,10 +1,20 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-800/50 mt-24">
-      <div className="container mx-auto px-4 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 Layr AI. All rights reserved.</p>
+    <motion.footer
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16"
+    >
+      <div className="text-center text-zinc-500 text-sm">
+        <p>&copy; 2026 LAYR AI. All rights reserved.</p>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
