@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
+import { QueryProvider } from "@/components/provider/query-provider";
+import { UserSyncProvider } from "@/components/provider/user-sync-provider";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,19 +29,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+    <ClerkProvider appearance={{ theme: dark }}>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <QueryProvider>
+            <UserSyncProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </UserSyncProvider>
+          </QueryProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

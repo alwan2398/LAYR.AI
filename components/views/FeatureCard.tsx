@@ -1,12 +1,6 @@
-import { LucideIcon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { MagicCard } from "../ui/magic-card";
-
-export interface FeatureCardProps {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-}
+import { FeatureCardProps } from "@/type/FeatureType";
 
 const FeatureCard = ({ icon: Icon, title, description }: FeatureCardProps) => {
   return (

@@ -5,21 +5,25 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, ImagePlus, Mic, Paperclip, ArrowRight } from "lucide-react";
+import { Paperclip, ArrowRight } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { PromptInputProps } from "@/type/Prompts";
+import { useUser, useClerk } from "@clerk/nextjs";
 
-interface PromptInputProps {
-  placeholder?: string;
-  onSubmit?: (prompt: string) => void;
-}
-
-const PromptInput = ({
-  placeholder = "Type your prompt here...",
+const InputPrompts = ({
+  placeholder = "Describe your website idea...",
   onSubmit,
 }: PromptInputProps) => {
   const [prompt, setPrompt] = useState("");
+  const { isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
 
   const handleSubmit = () => {
+    if (!isSignedIn) {
+      openSignIn();
+      return;
+    }
+
     if (onSubmit) {
       onSubmit(prompt);
     }
@@ -30,9 +34,9 @@ const PromptInput = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.0, duration: 0.5 }}
-      className="w-full max-w-4xl mx-auto mb-12"
+      className="w-full mb-12"
     >
-      <Card className="bg-transparent border-white/20 backdrop-blur-none relative overflow-hidden">
+      <Card className="bg-white/5 border-white/10 backdrop-blur-sm relative">
         <CardContent className="p-3">
           <Textarea
             value={prompt}
@@ -46,16 +50,17 @@ const PromptInput = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-zinc-400 hover:text-white hover:bg-white/10 group cursor-pointer"
+                className="text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer"
               >
-                <Paperclip className="h-4 w-4 mr-2" />
+                <Paperclip className="h-4 w-4" />
                 Attach
               </Button>
             </div>
 
             <Button
+              disabled={prompt.trim() === ""}
               size="icon"
-              className="bg-white text-black hover:bg-zinc-200 group cursor-pointer"
+              className="bg-white text-black hover:bg-zinc-200 cursor-pointer"
               onClick={handleSubmit}
             >
               <ArrowRight className="h-4 w-4" />
@@ -79,4 +84,4 @@ const PromptInput = ({
   );
 };
 
-export default PromptInput;
+export default InputPrompts;
